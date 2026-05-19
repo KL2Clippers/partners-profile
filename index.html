@@ -244,4 +244,408 @@ async function load(){
       ],
       files:[],
       notes:'해외사업부 핵심 중요 유통 납품처. 분기별 단가 변동 리스크 상시 체크 필요.\n현재 연체 이력 없으며 신용도 최우수 등급 유지 중.'},
-      {id:uid(),code:'B-002',name:'글로벌테크 Inc.',category:'무역업',status:'active',ceo:'James Park',founded:'2012',bizNo:'US-987654321',address:'1234 Tech Blvd, Los Angeles, CA',contact:'Sarah Kim',ctitle:'Manager',phone:'+1-310-555-0101',mobile:'+
+      {id:uid(),code:'B-002',name:'글로벌테크 Inc.',category:'무역업',status:'active',ceo:'James Park',founded:'2012',bizNo:'US-987654321',address:'1234 Tech Blvd, Los Angeles, CA',contact:'Sarah Kim',ctitle:'Manager',phone:'+1-310-555-0101',mobile:'+1-310-555-0102',email:'sarah@globaltech.com',
+      payTerms:'Net 30',payMethod:'Wire Transfer',creditLimit:'100000',currency:'USD',tradeStart:'2020-06-15',bank:'Bank of America',accountNo:'9876543210',accountHolder:'GlobalTech Inc.',
+      incoterms:'CIF',hsCode:'8542.31',origin:'US',portLoad:'Los Angeles',portDisch:'부산항',
+      tradeHistory:[
+        {id:uid(),date:'2024-12-01',type:'buy',item:'반도체 칩셋 v2',qty:'1000',unit:'EA',amount:'85000',note:'USD 외화 송금 결제'},
+      ],
+      timeline:[
+        {id:uid(),date:'2024-09-10',title:'L/C 대금 지불 조건 협의',detail:'기존 Sight L/C 구조에서 Usance 30일 구조로 유연화 변경'},
+        {id:uid(),date:'2020-06-15',title:'첫 글로벌 교역 체결',detail:'북미 지사 연계 1차 자재 수입 오퍼 계약 성립'},
+      ],
+      files:[],
+      notes:'외환 변동성(환리스크) 헤징 확인 필수. 반기별 바이어 공급망 안정성 실적 리뷰 대상.'}
+    ];
+    await save();
+  }
+  renderList();
+}
+
+async function save(){
+  try{await window.storage.set(SK,JSON.stringify(partners));}catch(e){}
+}
+
+function renderList(){
+  const q=(document.getElementById('search').value||'').toLowerCase();
+  const filtered=partners.filter(p=>p.name.toLowerCase().includes(q)||(p.code||'').toLowerCase().includes(q));
+  document.getElementById('cnt').textContent=partners.length;
+  document.getElementById('plist').innerHTML=filtered.length===0
+    ?'<p style="font-size:13px;color:var(--text-muted);text-align:center;padding:24px;">검색 결과가 없습니다</p>'
+    :filtered.map(p=>`<div class="pi ${selId===p.id?'active':''}" onclick="selectP('${p.id}')">
+      <div class="pname">${esc(p.name)}</div>
+      <div class="psub">${esc(p.code||'')}${p.category?' · '+esc(p.category):''}</div>
+      ${statusBadge(p.status)}
+    </div>`).join('');
+}
+
+function selectP(id){
+  selId=id;curTab='info';
+  renderList();showDetail();
+}
+
+function switchTab(t){
+  curTab=t;
+  document.querySelectorAll('.tab').forEach(el=>el.classList.toggle('on',el.dataset.tab===t));
+  ['info','trade','history','timeline','files'].forEach(n=>{
+    document.getElementById('tab-'+n).style.display=(n===t?'block':'none');
+  });
+  const p=partners.find(x=>x.id===selId);
+  if(!p)return;
+  if(t==='info')renderInfo(p);
+  else if(t==='trade')renderTrade(p);
+  else if(t==='history')renderHistory(p);
+  else if(t==='timeline')renderTimeline(p);
+  else if(t==='files')renderFiles(p);
+}
+
+function showDetail(){
+  const p=partners.find(x=>x.id===selId);
+  if(!p)return;
+  document.getElementById('empty-state').style.display='none';
+  document.getElementById('form-wrap').style.display='none';
+  document.getElementById('detail-wrap').style.display='block';
+  document.querySelectorAll('.tab').forEach(el=>el.classList.toggle('on',el.dataset.tab===curTab));
+  ['info','trade','history','timeline','files'].forEach(n=>{
+    document.getElementById('tab-'+n).style.display=(n===curTab?'block':'none');
+  });
+  switchTab(curTab);
+}
+
+function renderInfo(p){
+  const el=document.getElementById('tab-info');
+  el.innerHTML=`
+  <div class="card">
+    <div class="ph">
+      <div style="display:flex;align-items:center;gap:16px;flex:1;">
+        <div class="avatar">${initials(p.name)}</div>
+        <div class="pmeta">
+          <h1>${esc(p.name)}</h1>
+          <div class="code">${esc(p.code||'')}${p.category?' · '+esc(p.category):''}</div>
+          <div>${statusBadge(p.status)}</div>
+        </div>
+      </div>
+      <div class="abts">
+        <button class="btn btn-ed" onclick="openEdit()"><i class="ti ti-edit-circle" aria-hidden="true"></i>프로파일 편집</button>
+        <button class="btn btn-dl" onclick="deleteP()"><i class="ti ti-trash-x" aria-hidden="true"></i>삭제</button>
+      </div>
+    </div>
+    <div class="sec-label"><i class="ti ti-id-badge" aria-hidden="true"></i>마스터 마스터 법인 정보</div>
+    <div class="fgrid">
+      ${f('대표자명',p.ceo)}${f('설립연도',p.founded)}${f('사업자등록번호',p.bizNo)}${f('회사 주소',p.address)}
+    </div>
+    <div class="sec-label"><i class="ti ti-headset" aria-hidden="true"></i>지정 핫라인 담당자 정보</div>
+    <div class="fgrid">
+      ${f('담당자 성명',p.contact+(p.ctitle?' ('+p.ctitle+')':''))}${f('대표 유선번호',p.phone)}${f('휴대폰 직통번호',p.mobile)}${fe('이메일 주소',p.email)}
+    </div>
+    ${p.notes?`<div class="sec-label"><i class="ti ti-info-square-rounded" aria-hidden="true"></i>특이사항 및 스페셜 메모</div><div class="memo-box">${esc(p.notes)}</div>`:''}
+  </div>`;
+}
+
+function renderTrade(p){
+  const el=document.getElementById('tab-trade');
+  el.innerHTML=`
+  <div class="card">
+    <div class="sec-label"><i class="ti ti-wallet" aria-hidden="true"></i>정산 및 여신 결제 조건</div>
+    <div class="fgrid">
+      ${f('대금결제 방식',p.payTerms)}${f('인출 지급수단',p.payMethod)}${f('지정 여신한도액',p.creditLimit?Number(p.creditLimit).toLocaleString()+' '+esc(p.currency||'KRW'):'')}${f('기준 통화화폐',p.currency)}${f('비즈니스 계약 개시일',p.tradeStart)}
+    </div>
+    <div class="sec-label"><i class="ti ti-building-bank" aria-hidden="true"></i>대금 정산 수수 은행 계좌</div>
+    <div class="fgrid">
+      ${f('거래 은행 파트너',p.bank)}${f('입출 계좌번호',p.accountNo)}${f('공식 예금주명',p.accountHolder)}
+    </div>
+    <div class="sec-label"><i class="ti ti-plane-departure" aria-hidden="true"></i>글로벌 물류 및 무역 통관 조건</div>
+    <div class="fgrid">
+      ${f('정식 Incoterms',p.incoterms)}${f('품목분류 HS CODE',p.hsCode)}${f('제조 원산지 국가',p.origin)}${f('1차 적재 선적항',p.portLoad)}${f('최종 수하 양하항',p.portDisch)}
+    </div>
+  </div>`;
+}
+
+function renderHistory(p){
+  const el=document.getElementById('tab-history');
+  const hist=p.tradeHistory||[];
+  const totalBuy=hist.filter(h=>h.type==='buy').reduce((s,h)=>s+Number(h.amount||0),0);
+  const totalSell=hist.filter(h=>h.type==='sell').reduce((s,h)=>s+Number(h.amount||0),0);
+  el.innerHTML=`
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+      <span class="sec-label" style="margin:0;border:none;padding:0;"><i class="ti ti-file-analytics" aria-hidden="true"></i>재무 원장 기록</span>
+      <button class="btn btn-add-sm" onclick="openAddHistory()"><i class="ti ti-plus" aria-hidden="true"></i>새 거래내역 추가</button>
+    </div>
+    <div class="sum-grid">
+      <div class="sum-card"><div class="slabel">누적 매입고 (Buy)</div><div class="sval">${totalBuy.toLocaleString()}</div></div>
+      <div class="sum-card"><div class="slabel">누적 매출고 (Sell)</div><div class="sval" style="color:var(--primary);">${totalSell.toLocaleString()}</div></div>
+      <div class="sum-card"><div class="slabel">총 누적 계약고</div><div class="sval">${hist.length} 건</div></div>
+    </div>
+    ${hist.length===0?'<p style="font-size:13px;color:var(--text-muted);text-align:center;padding:32px 0;">누적 기록된 거래 대장 내역이 존재하지 않습니다.</p>':`
+    <div style="overflow-x:auto;">
+    <table class="trade-table">
+      <thead><tr>
+        <th>거래일자</th><th>회계구분</th><th>품목 세부명</th><th>수량</th><th>단위</th><th style="text-align:right;">총 실거래액</th><th>적요/비고</th><th>관리</th>
+      </tr></thead>
+      <tbody>
+        ${hist.map(h=>`<tr>
+          <td style="font-weight:500;">${esc(h.date)}</td>
+          <td><span class="type-badge ${h.type==='buy'?'t-buy':h.type==='sell'?'t-sell':'t-other'}">${h.type==='buy'?'매입 ⬇':'매출 ⬆':'기타'}</span></td>
+          <td style="font-weight:600;">${esc(h.item)}</td>
+          <td>${esc(h.qty)}</td>
+          <td><span class="text-muted">${esc(h.unit)}</span></td>
+          <td style="text-align:right; font-weight:700;">${Number(h.amount||0).toLocaleString()}</td>
+          <td style="color:var(--text-muted); font-size:12px;">${esc(h.note)}</td>
+          <td><button class="row-del" onclick="delHistory('${h.id}')" aria-label="삭제"><i class="ti ti-trash" aria-hidden="true"></i></button></td>
+        </tr>`).join('')}
+      </tbody>
+    </table></div>`}
+  </div>
+  <div class="card" id="add-history-form" style="display:none;">
+    <div class="sec-label" style="margin-top:0;"><i class="ti ti-square-plus" aria-hidden="true"></i>신규 재무 이력 작성 파트</div>
+    <div class="form-grid">
+      ${fi('h-date','거래 발생일','date','')}${sel('h-type','재무 속성','',[['buy','매입 전용'],['sell','매출 전용'],['other','영업외 기타']])}${fi('h-item','상세 내역 품목명','text','')}${fi('h-qty','취급 거래수량','text','')}${fi('h-unit','단위 기준','text','EA')}${fi('h-amount','실 집행 공급가액','number','')}${fi('h-note','비고 내역 레코드','text','')}
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-cancel" onclick="document.getElementById('add-history-form').style.display='none'">창 닫기</button>
+      <button class="btn btn-save" onclick="saveHistory()"><i class="ti ti-circle-check" aria-hidden="true"></i>전표 저장</button>
+    </div>
+  </div>`;
+}
+
+function renderTimeline(p){
+  const el=document.getElementById('tab-timeline');
+  const tl=(p.timeline||[]).slice().sort((a,b)=>b.date.localeCompare(a.date));
+  el.innerHTML=`
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+      <span class="sec-label" style="margin:0;border:none;padding:0;"><i class="ti ti-speakerphone" aria-hidden="true"></i>비즈니스 파트너십 교섭 로그</span>
+      <button class="btn btn-add-sm" onclick="openAddTimeline()"><i class="ti ti-message-plus" aria-hidden="true"></i>새 비즈니스 로그 추가</button>
+    </div>
+    ${tl.length===0?'<p style="font-size:13px;color:var(--text-muted);text-align:center;padding:32px 0;">기록된 주요 비즈니스 크리티컬 이슈 회의록이 없습니다.</p>':`
+    <div class="tl">
+      ${tl.map(t=>`<div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content-block">
+          <div class="tl-date"><i class="ti ti-calendar-time" style="font-size:13px;" aria-hidden="true"></i> ${esc(t.date)}</div>
+          <div class="tl-body">
+            <div class="tl-title">${esc(t.title)}</div>
+            ${t.detail?`<div class="tl-detail">${esc(t.detail)}</div>`:''}
+          </div>
+        </div>
+        <button class="row-del" onclick="delTimeline('${t.id}')" aria-label="로그 삭제"><i class="ti ti-x" aria-hidden="true"></i></button>
+      </div>`).join('')}
+    </div>`}
+  </div>
+  <div class="card" id="add-tl-form" style="display:none;">
+    <div class="sec-label" style="margin-top:0;"><i class="ti ti-ballpen" aria-hidden="true"></i>신규 미팅 회의/안건 로그 작성</div>
+    <div class="form-grid">
+      ${fi('tl-date','미팅/사건 발생일','date','')}${fi('tl-title','요약 아젠다 타이틀','text','')}
+      <div class="fg full"><label>교섭 의사록 상세 기술</label><textarea id="f-tl-detail" placeholder="조정 단가률, 주요 컴플레인 사안, 세부 계약 합의서 백업 사항 등을 리포트 형태로 기술하세요..."></textarea></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-cancel" onclick="document.getElementById('add-tl-form').style.display='none'">입력 취소</button>
+      <button class="btn btn-save" onclick="saveTL()"><i class="ti ti-circle-plus" aria-hidden="true"></i>타임라인 누적 기록</button>
+    </div>
+  </div>`;
+}
+
+function renderFiles(p){
+  const el=document.getElementById('tab-files');
+  const files=p.files||[];
+  el.innerHTML=`
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+      <span class="sec-label" style="margin:0;border:none;padding:0;"><i class="ti ti-archive" aria-hidden="true"></i>사업자 사본 및 마스터 계약 문서 오카이브 (${files.length})</span>
+    </div>
+    <div class="upload-area" onclick="document.getElementById('file-input').click()">
+      <i class="ti ti-cloud-upload" aria-hidden="true"></i>
+      <p>클릭하거나 로컬 파일을 여기에 드래그 앤 드롭 하세요</p>
+      <p style="font-size:12px; color:var(--text-muted); margin-top:4px;">PDF 인허가 서류, Excel 여신심사표, 정식 계약서 보관 스페이스</p>
+    </div>
+    <input type="file" id="file-input" multiple style="display:none;" onchange="handleFiles(event)"/>
+    ${files.length>0?`<div class="file-list">
+      ${files.map(f2=>`<div class="file-item">
+        <div class="file-info">
+          <i class="ti ${fileIcon(f2.name)} file-icon" aria-hidden="true"></i>
+          <div>
+            <div class="file-name" title="${esc(f2.name)}">${esc(f2.name)}</div>
+            <div class="file-meta">${f2.size} · ${f2.date}</div>
+          </div>
+        </div>
+        <button class="file-del" onclick="delFile('${f2.id}')" aria-label="파일 영구제거"><i class="ti ti-trash" aria-hidden="true"></i></button>
+      </div>`).join('')}
+    </div>`:''}
+  </div>`;
+}
+
+function fileIcon(name){
+  const ext=(name||'').split('.').pop().toLowerCase();
+  if(['pdf'].includes(ext))return'ti-file-type-pdf';
+  if(['xlsx','xls','csv'].includes(ext))return'ti-file-spreadsheet';
+  if(['docx','doc'].includes(ext))return'ti-file-word';
+  if(['jpg','jpeg','png','gif','webp'].includes(ext))return'ti-photo';
+  return'ti-file-unknown';
+}
+
+function f(label,val){return`<div class="field"><label>${label}</label><div class="val">${val||'—'}</div></div>`;}
+function fe(label,val){return`<div class="field"><label>${label}</label><div class="val">${val?`<a href="mailto:${esc(val)}">${esc(val)}</a>`:'—'}</div></div>`;}
+function fi(id,label,type,val,cls=''){return`<div class="fg ${cls}"><label>${label}</label><input id="f-${id}" type="${type}" value="${esc(val)}"/></div>`;}
+function sel(id,label,val,opts){return`<div class="fg"><label>${label}</label><select id="f-${id}">${opts.map(o=>`<option value="${o[0]}" ${val===o[0]?'selected':''}>${o[1]}</option>`).join('')}</select></div>`;}
+function gv(id){const e=document.getElementById('f-'+id);return e?e.value.trim():'';}
+
+function openAddHistory(){document.getElementById('add-history-form').style.display='block';document.getElementById('f-h-date').value=new Date().toISOString().slice(0,10);}
+function openAddTimeline(){document.getElementById('add-tl-form').style.display='block';document.getElementById('f-tl-date').value=new Date().toISOString().slice(0,10);}
+
+async function saveHistory(){
+  const p=partners.find(x=>x.id===selId);if(!p)return;
+  if(!p.tradeHistory)p.tradeHistory=[];
+  p.tradeHistory.unshift({id:uid(),date:gv('h-date'),type:gv('h-type'),item:gv('h-item'),qty:gv('h-qty'),unit:gv('h-unit'),amount:gv('h-amount'),note:gv('h-note')});
+  await save();renderHistory(p);showToast('내역 거래 전표가 정상 보관되었습니다.');
+}
+
+async function delHistory(hid){
+  const p=partners.find(x=>x.id===selId);if(!p)return;
+  p.tradeHistory=(p.tradeHistory||[]).filter(h=>h.id!==hid);
+  await save();renderHistory(p);showToast('성공적으로 삭제 완료');
+}
+
+async function saveTL(){
+  const p=partners.find(x=>x.id===selId);if(!p)return;
+  if(!p.timeline)p.timeline=[];
+  const detail=document.getElementById('f-tl-detail')?.value.trim()||'';
+  p.timeline.unshift({id:uid(),date:gv('tl-date'),title:gv('tl-title'),detail});
+  await save();renderTimeline(p);showToast('의사록 교섭 히스토리가 적재되었습니다.');
+}
+
+async function delTimeline(tid){
+  const p=partners.find(x=>x.id===selId);if(!p)return;
+  p.timeline=(p.timeline||[]).filter(t=>t.id!==tid);
+  await save();renderTimeline(p);showToast('성공적으로 삭제 완료');
+}
+
+async function handleFiles(e){
+  const p=partners.find(x=>x.id===selId);if(!p)return;
+  if(!p.files)p.files=[];
+  for(const file of e.target.files){
+    const sz=file.size<1024?file.size+'B':file.size<1048576?(file.size/1024).toFixed(1)+'KB':(file.size/1048576).toFixed(1)+'MB';
+    p.files.push({id:uid(),name:file.name,size:sz,date:new Date().toLocaleDateString('ko-KR')});
+  }
+  e.target.value='';
+  await save();renderFiles(p);showToast('파일 보관 처리 완료.');
+}
+
+async function delFile(fid){
+  const p=partners.find(x=>x.id===selId);if(!p)return;
+  p.files=(p.files||[]).filter(f=>f.id!==fid);
+  await save();renderFiles(p);showToast('파일 삭제 완료.');
+}
+
+function openNew(){
+  selId=null;renderList();
+  document.getElementById('empty-state').style.display='none';
+  document.getElementById('detail-wrap').style.display='none';
+  showForm(null);
+}
+
+function openEdit(){
+  const p=partners.find(x=>x.id===selId);
+  document.getElementById('detail-wrap').style.display='none';
+  showForm(p);
+}
+
+function showForm(p){
+  const isNew=!p;
+  document.getElementById('form-wrap').style.display='block';
+  document.getElementById('form-content').innerHTML=`
+  <div class="card">
+    <div class="sec-label" style="margin-top:0; font-size:15px;"><i class="ti ti-${isNew?'circle-plus':'edit'}" aria-hidden="true"></i>${isNew?'마스터 원장 마스터 파트너 신규 입력 창':'지정 바이어 핵심 마스터 원장 개정'}</div>
+
+    <div class="sec-label"><i class="ti ti-building" aria-hidden="true"></i>기업 식별 필수 항목</div>
+    <div class="form-grid">
+      ${fi('name','거래처 법인명/상호명 *','text',p?.name,'full')}
+      ${fi('code','마스터 고유 식별코드','text',p?.code)}
+      <div class="fg"><label>주요 업종 카테고리</label><select id="f-category">
+        ${['도매업','소매업','제조업','무역업','서비스업','물류업','기타'].map(c=>`<option ${p?.category===c?'selected':''}>${c}</option>`).join('')}
+      </select></div>
+      <div class="fg"><label>비즈니스 거래 세션 상태</label><select id="f-status">
+        <option value="active" ${(!p||p.status==='active')?'selected':''}>거래 활성화(Active)</option>
+        <option value="pending" ${p?.status==='pending'?'selected':''}>중간 협의중(Pending)</option>
+        <option value="inactive" ${p?.status==='inactive'?'selected':''}>안전 거래중단(Inactive)</option>
+      </select></div>
+      ${fi('ceo','법인 대표자명','text',p?.ceo)}${fi('founded','설립 연도','text',p?.founded)}${fi('bizNo','사업자등록번호식별','text',p?.bizNo)}${fi('address','본사 등기부상 소재 주소지','text',p?.address,'full')}
+    </div>
+
+    <div class="sec-label"><i class="ti ti-user-cog" aria-hidden="true"></i>다이렉트 소통 실무라인 채널</div>
+    <div class="form-grid">
+      ${fi('contact','지정 담당자 성명','text',p?.contact)}${fi('ctitle','소속 직급/직함','text',p?.ctitle)}${fi('phone','대표 유선 오피스번호','tel',p?.phone)}${fi('mobile','개인 다이렉트 휴대폰','tel',p?.mobile)}${fi('email','공식 이메일 서신 주소','email',p?.email,'full')}
+    </div>
+
+    <div class="sec-label"><i class="ti ti-coin" aria-hidden="true"></i>재무 결제 정산 계약 정보</div>
+    <div class="form-grid">
+      ${fi('payTerms','대금 결제 만기 조건','text',p?.payTerms)}${fi('payMethod','정산 처리 이체 수단','text',p?.payMethod)}${fi('creditLimit','최대 승인 여신 한도액','number',p?.creditLimit)}${fi('currency','기본 기준외환 코드','text',p?.currency||'KRW')}${fi('tradeStart','계약 효력 개시일','date',p?.tradeStart)}
+    </div>
+
+    <div class="sec-label"><i class="ti ti-wallet" aria-hidden="true"></i>주요 자금 수납 은행 금융계좌</div>
+    <div class="form-grid">
+      ${fi('bank','거래 파트너 은행명','text',p?.bank)}${fi('accountNo','수납 계좌 식별번호','text',p?.accountNo)}${fi('accountHolder','예금 명의 주체 명','text',p?.accountHolder)}
+    </div>
+
+    <div class="sec-label"><i class="ti ti-anchor" aria-hidden="true"></i>국제 무역 통관 물류 오퍼레이션</div>
+    <div class="form-grid">
+      <div class="fg"><label>지정 무역 Incoterms</label><select id="f-incoterms">
+        ${['','EXW','FCA','FAS','FOB','CFR','CIF','CPT','CIP','DAP','DPU','DDP'].map(t=>`<option ${p?.incoterms===t?'selected':''}>${t}</option>`).join('')}
+      </select></div>
+      ${fi('hsCode','관세 품목 관할 HS CODE','text',p?.hsCode)}${fi('origin','주요 생산 제조국 원산지','text',p?.origin)}${fi('portLoad','1차 출항 선적항구','text',p?.portLoad)}${fi('portDisch','최종 인수 도착항구','text',p?.portDisch)}
+    </div>
+
+    <div class="sec-label"><i class="ti ti-notebook" aria-hidden="true"></i>정기 히스토리 백업 내부 메모</div>
+    <div class="fg full"><textarea id="f-notes" placeholder="담당자 성향, 연체 마일스톤 리스크 정보, 경쟁사 진입 여부 등의 로우 데이터를 기재하세요...">${esc(p?.notes||'')}</textarea></div>
+
+    <div class="form-actions">
+      <button class="btn btn-cancel" onclick="cancelForm('${p?.id||''}')">입력 파기 및 이탈</button>
+      <button class="btn btn-save" onclick="saveForm('${p?.id||''}')"><i class="ti ti-database-share" aria-hidden="true"></i>원장 원격 저장</button>
+    </div>
+  </div>`;
+}
+
+async function saveForm(eid){
+  const name=gv('name');if(!name){alert('법인 식별을 위해 거래처명은 필수 입력 사항입니다.');return;}
+  const orig=eid?partners.find(x=>x.id===eid):null;
+  const data={
+    id:eid||uid(),name,code:gv('code'),category:document.getElementById('f-category').value,status:document.getElementById('f-status').value,
+    ceo:gv('ceo'),founded:gv('founded'),bizNo:gv('bizNo'),address:gv('address'),
+    contact:gv('contact'),ctitle:gv('ctitle'),phone:gv('phone'),mobile:gv('mobile'),email:gv('email'),
+    payTerms:gv('payTerms'),payMethod:gv('payMethod'),creditLimit:gv('creditLimit'),currency:gv('currency'),tradeStart:gv('tradeStart'),
+    bank:gv('bank'),accountNo:gv('accountNo'),accountHolder:gv('accountHolder'),
+    incoterms:document.getElementById('f-incoterms').value,hsCode:gv('hsCode'),origin:gv('origin'),portLoad:gv('portLoad'),portDisch:gv('portDisch'),
+    notes:document.getElementById('f-notes')?.value.trim()||'',
+    tradeHistory:orig?.tradeHistory||[],timeline:orig?.timeline||[],files:orig?.files||[]
+  };
+  if(eid){const i=partners.findIndex(x=>x.id===eid);if(i>-1)partners[i]=data;}else partners.unshift(data);
+  selId=data.id;curTab='info';
+  await save();renderList();showDetail();showToast('원장 마스터에 성공적으로 동기화되었습니다.');
+}
+
+function cancelForm(eid){
+  document.getElementById('form-wrap').style.display='none';
+  if(eid&&partners.find(x=>x.id===eid)){selId=eid;showDetail();}
+  else{document.getElementById('empty-state').style.display='flex';}
+}
+
+async function deleteP(){
+  const p=partners.find(x=>x.id===selId);if(!p)return;
+  if(!confirm(`"${p.name}" 파트너사의 원장을 전산망에서 완전히 삭제 처리할까요?`))return;
+  partners=partners.filter(x=>x.id!==selId);selId=null;
+  await save();renderList();
+  document.getElementById('detail-wrap').style.display='none';
+  document.getElementById('empty-state').style.display='flex';
+  showToast('전산 파일 삭제 처리 완료.');
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=msg;
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+load();
+</script>
+</body>
+</html>
