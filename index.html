@@ -40,7 +40,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 
 .app { display: flex; height: 100vh; overflow: hidden; }
 
-/* 모던 토스 스타일 사이드바 */
+/* 토스 커머스 스타일 사이드바 */
 .sidebar { width: 300px; flex-shrink: 0; border-right: 1px solid var(--border-color); display: flex; flex-direction: column; background: var(--bg-sidebar); }
 .sh { padding: 24px 20px; }
 .sh h2 { font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
@@ -52,7 +52,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 .add-btn { width: 100%; padding: 12px; font-size: 14px; cursor: pointer; background: var(--primary); color: #fff; border: none; border-radius: var(--radius-md); font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; transition: background 0.2s; box-shadow: var(--shadow-sm); }
 .add-btn:hover { background: var(--primary-hover); }
 
-/* 리스트 관리 */
+/* 리스트 스타일 */
 .plist { flex: 1; overflow-y: auto; padding: 0 12px 20px; }
 .pi { padding: 14px 16px; border-radius: var(--radius-md); cursor: pointer; margin-bottom: 8px; border: 1px solid transparent; transition: all 0.2s; background: #fff; box-shadow: var(--shadow-sm); }
 .pi:hover { background: #f9fafb; transform: translateY(-1px); }
@@ -65,12 +65,12 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 .s-inactive { background: #f3f4f6; color: var(--text-muted); }
 .s-pending { background: #feecdc; color: #b45309; }
 
-/* 메인 대시보드 */
+/* 메인 스페이스 */
 .main { flex: 1; overflow-y: auto; background: var(--bg-app); display: flex; flex-direction: column; }
 .empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--text-muted); text-align: center; background: #fff; margin: 20px; border-radius: var(--radius-lg); border: 1px dashed var(--border-color); }
 .empty i { font-size: 56px; color: #d1d5db; margin-bottom: 16px; }
 
-/* 상단 탭 인프라 */
+/* 상단 탭 링크 바 */
 .tabs { display: flex; gap: 8px; border-bottom: 1px solid var(--border-color); background: #fff; padding: 0 32px; position: sticky; top: 0; z-index: 10; }
 .tab { padding: 18px 12px; font-size: 15px; cursor: pointer; color: var(--text-muted); border-bottom: 3px solid transparent; display: flex; align-items: center; gap: 8px; font-weight: 500; transition: all 0.15s; }
 .tab.on { color: var(--primary); border-bottom-color: var(--primary); font-weight: 700; }
@@ -78,7 +78,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 
 .tab-content { padding: 32px; max-width: 1200px; width: 100%; margin: 0 auto; }
 
-/* 카드 섹션 */
+/* 모던 카드 레이아웃 */
 .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 32px; margin-bottom: 24px; box-shadow: var(--shadow-md); }
 .ph { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border-light); }
 .avatar { width: 64px; height: 64px; border-radius: 14px; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 22px; color: var(--primary); flex-shrink: 0; }
@@ -87,7 +87,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 .pmeta .code { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
 .abts { display: flex; gap: 10px; }
 
-/* 프리미엄 버튼 디자인 */
+/* 버튼 가이드라인 */
 .btn { padding: 10px 18px; font-size: 14px; border-radius: var(--radius-md); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; transition: all 0.2s; border: 1px solid transparent; font-family: var(--font-sans); }
 .btn-ed { background: #fff; border-color: var(--border-color); color: var(--text-main); box-shadow: var(--shadow-sm); }
 .btn-ed:hover { background: #f9fafb; border-color: #cbd5e1; }
@@ -100,7 +100,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 .btn-add-sm { background: #fff; color: var(--primary); border: 1px solid var(--primary); padding: 6px 14px; font-size: 13px; }
 .btn-add-sm:hover { background: var(--primary-light); }
 
-/* 항목 타이틀 라벨 */
+/* 그리드 및 데이터 필드 */
 .sec-label { font-size: 14px; font-weight: 700; color: var(--primary); margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
 .sec-label:first-child { margin-top: 0; }
 .fgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px 32px; }
@@ -111,7 +111,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 
 .memo-box { background: #f9fafb; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 18px 20px; font-size: 14px; color: var(--text-main); line-height: 1.7; white-space: pre-wrap; min-height: 80px; }
 
-/* 테일윈드 스타일 폼 필드 */
+/* 테일윈드 스타일 그리드 인풋 서식 */
 .form-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px 20px; }
 .fg { display: flex; flex-direction: column; gap: 6px; grid-column: span 4; }
 .fg.full { grid-column: span 12; }
@@ -122,7 +122,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 .fg textarea { resize: vertical; min-height: 120px; }
 .form-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border-color); }
 
-/* 데이터 대장 테이블 */
+/* 데이터 테이블 */
 .trade-table { width: 100%; font-size: 14px; border-collapse: collapse; }
 .trade-table th { text-align: left; font-weight: 600; color: var(--text-muted); padding: 14px 16px; border-bottom: 1px solid var(--border-color); background: #f9fafb; }
 .trade-table td { padding: 16px 16px; border-bottom: 1px solid var(--border-light); color: var(--text-main); }
@@ -133,7 +133,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 .t-sell { background: var(--success-bg); color: var(--success-text); }
 .t-other { background: #f3f4f6; color: var(--text-muted); }
 
-/* 미팅 타임라인 로그 */
+/* 히스토리 타임라인 로그 */
 .tl { position: relative; padding-left: 28px; margin-top: 12px; }
 .tl::before { content: ''; position: absolute; left: 5px; top: 10px; bottom: 0; width: 2px; background: var(--border-color); }
 .tl-item { position: relative; margin-bottom: 24px; display: flex; align-items: flex-start; justify-content: space-between; }
@@ -144,13 +144,13 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 .tl-body .tl-title { font-size: 15px; font-weight: 700; color: var(--text-main); }
 .tl-body .tl-detail { font-size: 14px; color: var(--text-muted); margin-top: 6px; line-height: 1.6; }
 
-/* 상단 통계 현황판 */
+/* 대시보드 통계 카드 */
 .sum-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
 .sum-card { background: #f9fafb; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 18px 20px; }
 .sum-card .slabel { font-size: 13px; color: var(--text-muted); font-weight: 600; }
 .sum-card .sval { font-size: 22px; font-weight: 700; color: var(--text-main); margin-top: 6px; letter-spacing: -0.02em; }
 
-/* 토스트 판넬 */
+/* 토스트 알림바 */
 .toast { position: fixed; bottom: 32px; right: 32px; background: #1f2937; border-radius: var(--radius-md); padding: 14px 24px; font-size: 14px; color: #fff; opacity: 0; transform: translateY(10px); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 200; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
 .toast.show { opacity: 1; transform: translateY(0); }
 .row-del { font-size: 16px; cursor: pointer; color: var(--text-muted); border: none; background: none; padding: 6px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s; }
@@ -201,7 +201,6 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 <div class="toast" id="toast"><i class="ti ti-discount-check-filled" style="color:#34d399; font-size:18px;" aria-hidden="true"></i><span id="toast-msg"></span></div>
 
 <script>
-// 내부 변수 데이터셋 연동
 const SK='tp_full_v3';
 let partners=[], selId=null, curTab='info';
 
@@ -471,7 +470,7 @@ function delTimeline(tid){
   save();renderTimeline(p);showToast('로그 이력이 완벽히 제거되었습니다.');
 }
 
-// 🛠️ 완벽 수정 완료: 이제 먹통 없이 완벽하게 작동합니다!
+// 🛠️ 완벽 수정 완료: 오타 및 매핑 버그 원천 차단
 function openNew(){
   selId=null;
   renderList();
@@ -534,7 +533,7 @@ function showForm(p){
     </div>
 
     <div class="sec-label"><i class="ti ti-notes-clean" aria-hidden="true"></i>정기 히스토리 백업 내부 가이드 룸</div>
-    <div class="fg full"><textarea id="f-notes" placeholder="바이어 비즈니스 성향, 특수 공급률 히스토리, 여신 단가 리스크 관리용 로우 텍텍스트를 메모 형태로 기재하세요...">${esc(p?.notes||'')}</textarea></div>
+    <div class="fg full"><textarea id="f-notes" placeholder="바이어 비즈니스 성향, 특수 공급률 히스토리, 여신 단가 리스크 관리용 로우 텍스트를 메모 형태로 기재하세요...">${esc(p?.notes||'')}</textarea></div>
 
     <div class="form-actions">
       <button class="btn btn-cancel" onclick="cancelForm('${p?.id||''}')">입력 파기 및 이탈</button>
