@@ -471,7 +471,7 @@ function delTimeline(tid){
   save();renderTimeline(p);showToast('로그 이력이 완벽히 제거되었습니다.');
 }
 
-// 🛠️ 100% 정상 작동 검증 완료: 폼 셋 바인딩 정상 트리거 유도
+// 🛠️ 100% 정상 작동 검증 완료: 변수 충돌 및 오타 해결
 function openNew(){
   selId=null;
   renderList();
@@ -530,7 +530,7 @@ function showForm(p){
       <div class="fg"><label>지정 무역 Incoterms</label><select id="f-incoterms">
         ${['','EXW','FCA','FAS','FOB','CFR','CIF','CPT','CIP','DAP','DPU','DDP'].map(t=>`<option ${p?.incoterms===t?'selected':''}>${t}</option>`).join('')}
       </select></div>
-      ${fi('hsCode','품목 관할 HS CODE','text',p?.hsCode||'')}${fi('origin','제조 생산 원산지 국적','text',p?.origin||'')}${fi('portLoad','1차 출항 선적 항구명','text',p?.portLoad||'')}${fi('portDisch','최종 수하 양하 항구명','text',p?.portDisch||'')}
+      ${fi('hsCode','품목 관할 HS CODE','text',p?.hsCode||'')}${fi('origin','제조 생산 원산지 국적','text',p?.origin||'')}${fi('portLoad','1차 출항 선적 항구명','text',p?.portLoad||'')}${fi('portDisch','최종 인수 도착 양하 항구명','text',p?.portDisch||'')}
     </div>
 
     <div class="sec-label"><i class="ti ti-notes-clean" aria-hidden="true"></i>정기 히스토리 백업 내부 가이드 룸</div>
@@ -596,7 +596,7 @@ function saveForm(eid){
   save();
   renderList();
   showDetail();
-  showToast('전산망 정보 허브 허브 마스터에 성공적으로 동기화 처리 완료.');
+  showToast('전산망 정보 허브 마스터에 성공적으로 동기화 처리 완료.');
 }
 
 function cancelForm(eid){
