@@ -133,7 +133,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 .t-sell { background: var(--success-bg); color: var(--success-text); }
 .t-other { background: #f3f4f6; color: var(--text-muted); }
 
-/* 히스토리 타임라인 로그 */
+/* 미팅 타임라인 로그 */
 .tl { position: relative; padding-left: 28px; margin-top: 12px; }
 .tl::before { content: ''; position: absolute; left: 5px; top: 10px; bottom: 0; width: 2px; background: var(--border-color); }
 .tl-item { position: relative; margin-bottom: 24px; display: flex; align-items: flex-start; justify-content: space-between; }
@@ -144,13 +144,13 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 .tl-body .tl-title { font-size: 15px; font-weight: 700; color: var(--text-main); }
 .tl-body .tl-detail { font-size: 14px; color: var(--text-muted); margin-top: 6px; line-height: 1.6; }
 
-/* 대시보드 통계 카드 */
+/* 상단 통계 현황판 */
 .sum-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
 .sum-card { background: #f9fafb; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 18px 20px; }
 .sum-card .slabel { font-size: 13px; color: var(--text-muted); font-weight: 600; }
 .sum-card .sval { font-size: 22px; font-weight: 700; color: var(--text-main); margin-top: 6px; letter-spacing: -0.02em; }
 
-/* 토스트 알림바 */
+/* 토스트 판넬 */
 .toast { position: fixed; bottom: 32px; right: 32px; background: #1f2937; border-radius: var(--radius-md); padding: 14px 24px; font-size: 14px; color: #fff; opacity: 0; transform: translateY(10px); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 200; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
 .toast.show { opacity: 1; transform: translateY(0); }
 .row-del { font-size: 16px; cursor: pointer; color: var(--text-muted); border: none; background: none; padding: 6px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s; }
@@ -201,6 +201,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 <div class="toast" id="toast"><i class="ti ti-discount-check-filled" style="color:#34d399; font-size:18px;" aria-hidden="true"></i><span id="toast-msg"></span></div>
 
 <script>
+// 내부 변수 데이터셋 연동
 const SK='tp_full_v3';
 let partners=[], selId=null, curTab='info';
 
@@ -470,7 +471,6 @@ function delTimeline(tid){
   save();renderTimeline(p);showToast('로그 이력이 완벽히 제거되었습니다.');
 }
 
-// 🛠️ 완벽 수정 완료: 오타 및 매핑 버그 원천 차단
 function openNew(){
   selId=null;
   renderList();
@@ -627,7 +627,8 @@ function showToast(msg){
   setTimeout(()=>t.classList.remove('show'),2400);
 }
 
-load();
+// ⚠️ 변경 포인트: HTML 로딩이 완료된 시점에 코드가 안정적으로 돌게 보정
+window.addEventListener('DOMContentLoaded', load);
 </script>
 </body>
 </html>
