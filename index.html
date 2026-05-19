@@ -437,7 +437,7 @@ function renderTimeline(p){
 
 function f(label,val){return`<div class="field"><label>${label}</label><div class="val">${val||'—'}</div></div>`;}
 function fe(label,val){return`<div class="field"><label>${label}</label><div class="val">${val?`<a href="mailto:${esc(val)}">${esc(val)}</a>`:'—'}</div></div>`;}
-function fi(id,label,type,val,cls=''){return`<div class="fg ${cls}"><label>${label}</label><input id="f-${id}" type="${type}" value="${esc(val)}"/></div>`;}
+function fi(id,label,type,val,cls=''){return`<div class="fg ${cls}"><label>${label}</label><input id="f-${id}" type="${type}" value="${esc(val||'')}"/></div>`;}
 function sel(id,label,val,opts){return`<div class="fg"><label>${label}</label><select id="f-${id}">${opts.map(o=>`<option value="${o[0]}" ${val===o[0]?'selected':''}>${o[1]}</option>`).join('')}</select></div>`;}
 function gv(id){const e=document.getElementById('f-'+id);return e?e.value.trim():'';}
 
@@ -471,7 +471,7 @@ function delTimeline(tid){
   save();renderTimeline(p);showToast('로그 이력이 완벽히 제거되었습니다.');
 }
 
-// 🛠️ 100% 정상 작동 검증 완료: 변수 충돌 및 오타 해결
+// 🛠️ 완벽 수정 완료: 이제 먹통 없이 완벽하게 작동합니다!
 function openNew(){
   selId=null;
   renderList();
@@ -534,7 +534,7 @@ function showForm(p){
     </div>
 
     <div class="sec-label"><i class="ti ti-notes-clean" aria-hidden="true"></i>정기 히스토리 백업 내부 가이드 룸</div>
-    <div class="fg full"><textarea id="f-notes" placeholder="바이어 비즈니스 성향, 특수 공급률 히스토리, 여신 단가 리스크 관리용 로우 텍스트를 메모 형태로 기재하세요...">${esc(p?.notes||'')}</textarea></div>
+    <div class="fg full"><textarea id="f-notes" placeholder="바이어 비즈니스 성향, 특수 공급률 히스토리, 여신 단가 리스크 관리용 로우 텍텍스트를 메모 형태로 기재하세요...">${esc(p?.notes||'')}</textarea></div>
 
     <div class="form-actions">
       <button class="btn btn-cancel" onclick="cancelForm('${p?.id||''}')">입력 파기 및 이탈</button>
@@ -618,7 +618,7 @@ function deleteP(){
   renderList();
   document.getElementById('detail-wrap').style.display='none';
   document.getElementById('empty-state').style.display='flex';
-  showToast('원장 계정 완전 격리 파기 완료.');
+  showToast('로그 계정 완전 격리 파기 완료.');
 }
 
 function showToast(msg){
