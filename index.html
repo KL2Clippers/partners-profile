@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>거래처 프로파일 통합 관리 시스템</title>
+  <title>해외사업2팀 거래선 프로파일 시스템</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,7 +40,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 
 .app { display: flex; height: 100vh; overflow: hidden; }
 
-/* 토스 스타일 프리미엄 사이드바 */
+/* 토스 컴퍼니풍 사이드바 패널 */
 .sidebar { width: 300px; flex-shrink: 0; border-right: 1px solid var(--border-color); display: flex; flex-direction: column; background: var(--bg-sidebar); }
 .sh { padding: 24px 20px; }
 .sh h2 { font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
@@ -52,7 +52,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 .add-btn { width: 100%; padding: 12px; font-size: 14px; cursor: pointer; background: var(--primary); color: #fff; border: none; border-radius: var(--radius-md); font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; transition: background 0.2s; box-shadow: var(--shadow-sm); }
 .add-btn:hover { background: var(--primary-hover); }
 
-/* 리스트 관리 */
+/* 리스트 컴포넌트 */
 .plist { flex: 1; overflow-y: auto; padding: 0 12px 20px; }
 .pi { padding: 14px 16px; border-radius: var(--radius-md); cursor: pointer; margin-bottom: 8px; border: 1px solid transparent; transition: all 0.2s; background: #fff; box-shadow: var(--shadow-sm); }
 .pi:hover { background: #f9fafb; transform: translateY(-1px); }
@@ -64,12 +64,12 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 .s-inactive { background: #f3f4f6; color: var(--text-muted); }
 .s-pending { background: #feecdc; color: #b45309; }
 
-/* 메인 대시보드 */
+/* 메인 대시보드 코어 */
 .main { flex: 1; overflow-y: auto; background: var(--bg-app); display: flex; flex-direction: column; }
 .empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--text-muted); text-align: center; background: #fff; margin: 20px; border-radius: var(--radius-lg); border: 1px dashed var(--border-color); }
 .empty i { font-size: 56px; color: #d1d5db; margin-bottom: 16px; }
 
-/* 상단 탭 매핑 시스템 */
+/* 상단 정보 전환 탭 */
 .tabs { display: flex; gap: 8px; border-bottom: 1px solid var(--border-color); background: #fff; padding: 0 32px; position: sticky; top: 0; z-index: 10; }
 .tab { padding: 18px 12px; font-size: 15px; cursor: pointer; color: var(--text-muted); border-bottom: 3px solid transparent; display: flex; align-items: center; gap: 8px; font-weight: 500; transition: all 0.15s; }
 .tab.on { color: var(--primary); border-bottom-color: var(--primary); font-weight: 700; }
@@ -77,7 +77,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 
 .tab-content { padding: 32px; max-width: 1200px; width: 100%; margin: 0 auto; }
 
-/* 레이아웃 카드 파트 */
+/* 카드 세션 레이아웃 */
 .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 32px; margin-bottom: 24px; box-shadow: var(--shadow-md); }
 .ph { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border-light); }
 .avatar { width: 64px; height: 64px; border-radius: 14px; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 22px; color: var(--primary); flex-shrink: 0; }
@@ -86,7 +86,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 .pmeta .code { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
 .abts { display: flex; gap: 10px; }
 
-/* 공통 정밀 버튼 */
+/* 세련된 버튼 인프라 */
 .btn { padding: 10px 18px; font-size: 14px; border-radius: var(--radius-md); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; transition: all 0.2s; border: 1px solid transparent; font-family: var(--font-sans); }
 .btn-ed { background: #fff; border-color: var(--border-color); color: var(--text-main); box-shadow: var(--shadow-sm); }
 .btn-ed:hover { background: #f9fafb; border-color: #cbd5e1; }
@@ -99,7 +99,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 .btn-add-sm { background: #fff; color: var(--primary); border: 1px solid var(--primary); padding: 6px 14px; font-size: 13px; }
 .btn-add-sm:hover { background: var(--primary-light); }
 
-/* 그리드 인프라 구조 */
+/* 항목 타이틀 라벨 */
 .sec-label { font-size: 14px; font-weight: 700; color: var(--primary); margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
 .sec-label:first-child { margin-top: 0; }
 .fgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px 32px; }
@@ -110,7 +110,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 
 .memo-box { background: #f9fafb; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 18px 20px; font-size: 14px; color: var(--text-main); line-height: 1.7; white-space: pre-wrap; min-height: 80px; }
 
-/* 인풋 세션 컨테이너 */
+/* 테일윈드 12그리드 자동 폼 레이아웃 */
 .form-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px 20px; }
 .fg { display: flex; flex-direction: column; gap: 6px; grid-column: span 4; }
 .fg.full { grid-column: span 12; }
@@ -121,7 +121,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 .fg textarea { resize: vertical; min-height: 120px; }
 .form-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border-color); }
 
-/* 데이터 테이블 원장 */
+/* 전표 회계 내역 테이블 */
 .trade-table { width: 100%; font-size: 14px; border-collapse: collapse; }
 .trade-table th { text-align: left; font-weight: 600; color: var(--text-muted); padding: 14px 16px; border-bottom: 1px solid var(--border-color); background: #f9fafb; }
 .trade-table td { padding: 16px 16px; border-bottom: 1px solid var(--border-light); color: var(--text-main); }
@@ -132,7 +132,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 .t-sell { background: var(--success-bg); color: var(--success-text); }
 .t-other { background: #f3f4f6; color: var(--text-muted); }
 
-/* 미팅 타임라인 로그 */
+/* 히스토리 타임라인 타일 */
 .tl { position: relative; padding-left: 28px; margin-top: 12px; }
 .tl::before { content: ''; position: absolute; left: 5px; top: 10px; bottom: 0; width: 2px; background: var(--border-color); }
 .tl-item { position: relative; margin-bottom: 24px; display: flex; align-items: flex-start; justify-content: space-between; }
@@ -143,7 +143,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 .tl-body .tl-title { font-size: 15px; font-weight: 700; color: var(--text-main); }
 .tl-body .tl-detail { font-size: 14px; color: var(--text-muted); margin-top: 6px; line-height: 1.6; }
 
-/* 상단 통계 현황판 */
+/* 대시보드 스탯 보드 */
 .sum-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
 .sum-card { background: #f9fafb; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 18px 20px; }
 .sum-card .slabel { font-size: 13px; color: var(--text-muted); font-weight: 600; }
@@ -159,7 +159,7 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 </head>
 <body>
 
-<h2 class="sr-only">거래처 프로파일 통합 관리 시스템</h2>
+<h2 class="sr-only">해외사업2팀 거래선 프로파일 시스템</h2>
 <div class="app">
   <div class="sidebar">
     <div class="sh">
@@ -200,7 +200,8 @@ body { background: var(--bg-app); font-family: var(--font-sans); color: var(--te
 <div class="toast" id="toast"><i class="ti ti-discount-check-filled" style="color:#34d399; font-size:18px;" aria-hidden="true"></i><span id="toast-msg"></span></div>
 
 <script>
-const SK='tp_full_v3';
+// 🛠️ 근본적 해결책: 옛날 클로드 데이터 찌꺼기와 완전히 절연된 뉴 마스터 스토리지 키 생성
+const SK='coway_overseas2_final_system_key';
 let partners=[], selId=null, curTab='info';
 
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
@@ -214,7 +215,6 @@ function statusBadge(s){
   return'<span class="sbadge s-pending">협의중</span>';
 }
 
-// 🛠️ 치명적 버그 수정 1: 모든 데이터 필드가 완벽한 객체 형태로 존재하도록 초기셋 보정
 function load(){
   try {
     const raw = localStorage.getItem(SK);
@@ -225,28 +225,28 @@ function load(){
   
   if(!partners || !partners.length){
     partners=[
-      {id:uid(),code:'A-001',name:'(주)대한무역',category:'도매업',status:'active',ceo:'이대한',founded:'2005',bizNo:'123-45-67890',address:'서울시 중구 을지로 100',contact:'김철수',ctitle:'부장',phone:'02-1234-5678',mobile:'010-1234-5678',email:'kim@daehan.co.kr',
-      payTerms:'월말 결제',payMethod:'계좌이체',creditLimit:'50000000',currency:'KRW',tradeStart:'2018-03-01',bank:'국민은행',accountNo:'123-456-789012',accountHolder:'(주)대한무역',
+      {id:uid(),code:'A-001',name:'Waternet',category:'무역업',status:'active',ceo:'이대한',founded:'2005',bizNo:'123-45-67890',address:'서울시 중구 을지로 100',contact:'김철수',ctitle:'부장',phone:'02-1234-5678',mobile:'010-1234-5678',email:'kim@daehan.co.kr',
+      payTerms:'월말 결제',payMethod:'계좌이체',creditLimit:'50000000',currency:'KRW',tradeStart:'2018-03-01',bank:'국민은행',accountNo:'123-456-789012',accountHolder:'Waternet',
       incoterms:'FOB',hsCode:'8517.12',origin:'KR',portLoad:'부산항',portDisch:'',
       tradeHistory:[
-        {id:uid(),date:'2024-11-15',type:'sell',item:'전자부품 A',qty:'500',unit:'EA',amount:'12500000',note:'정기납품'},
-        {id:uid(),date:'2024-08-20',type:'sell',item:'전자부품 B',qty:'200',unit:'EA',amount:'8000000',note:''},
+        {id:uid(),date:'2025-11-15',type:'sell',item:'코웨이 정수기 A형',qty:'500',unit:'EA',amount:'12500000',note:'정기선적 완료'},
+        {id:uid(),date:'2025-08-20',type:'sell',item:'청정기 필터 세트',qty:'200',unit:'EA',amount:'8000000',note:''}
       ],
       timeline:[
-        {id:uid(),date:'2024-11-20',title:'4분기 공급 단가 협의 조율',detail:'글로벌 원자재 인상분 반영 내년 1분기까지 최종 동결 합의.'},
-        {id:uid(),date:'2024-06-01',title:'사내 여신 리스크 한도 증액 검토',detail:'신용평가 보고서 검토 후 기존 3천만에서 5천만원으로 상향 조정 완료.'}
+        {id:uid(),date:'2025-11-20',title:'4분기 파트너 공급 단가 협의 조율',detail:'글로벌 원자재 인상분 방어 조치 통과, 내년 1분기까지 최종 동결 합의 완료.'},
+        {id:uid(),date:'2025-06-01',title:'사내 여신 리스크 한도 증액 심사 패스',detail:'신용평가 무역보험 한도 확인 후 기존 3천만에서 5천만원으로 상향 조정 완료.'}
       ],
-      notes:'해외사업부 메인 핵심 계정 유통 파트너사. 환율 변동 추이 상시 연동 필수.'},
-      {id:uid(),code:'B-002',name:'글로벌테크 Inc.',category:'무역업',status:'active',ceo:'James Park',founded:'2012',bizNo:'US-987654321',address:'1234 Tech Blvd, Los Angeles, CA',contact:'Sarah Kim',ctitle:'Manager',phone:'+1-310-555-0101',mobile:'+1-310-555-0102',email:'sarah@globaltech.com',
-      payTerms:'Net 30',payMethod:'Wire Transfer',creditLimit:'100000',currency:'USD',tradeStart:'2020-06-15',bank:'Bank of America',accountNo:'9876543210',accountHolder:'GlobalTech Inc.',
+      notes:'해외사업2팀 유통 핵심 파트너 바이어 계정. 환율 리스크 상시 모니터링 체크 대상.'},
+      {id:uid(),code:'B-002',name:'Brondell',category:'도매업',status:'active',ceo:'James Park',founded:'2012',bizNo:'US-987654321',address:'1234 Tech Blvd, Los Angeles, CA',contact:'Sarah Kim',ctitle:'Manager',phone:'+1-310-555-0101',mobile:'+1-310-555-0102',email:'sarah@brondell.com',
+      payTerms:'Net 30',payMethod:'Wire Transfer',creditLimit:'100000',currency:'USD',tradeStart:'2020-06-15',bank:'Bank of America',accountNo:'9876543210',accountHolder:'Brondell Inc.',
       incoterms:'CIF',hsCode:'8542.31',origin:'US',portLoad:'Los Angeles',portDisch:'부산항',
       tradeHistory:[
-        {id:uid(),date:'2024-12-01',type:'buy',item:'반도체 메인보드 칩셋',qty:'1000',unit:'EA',amount:'85000',note:'USD 외화 송금'}
+        {id:uid(),date:'2025-12-01',type:'buy',item:'OEM 비데 컨트롤 보드',qty:'1000',unit:'EA',amount:'85000',note:'외화 T/T 송금 완료'}
       ],
       timeline:[
-        {id:uid(),date:'2024-09-10',title:'대금 지불 가이드라인 변경 협의',detail:'기존 Sight L/C 구조에서 여신 유연화 전략에 의거 Usance 30일로 연장 성립.'}
+        {id:uid(),date:'2025-09-10',title:'대금 정산 기일 여신 유연화 협의',detail:'기존 Sight L/C 구조에서 당사 상생 가이드라인에 의거 Usance 30일로 결제 조건 완화.'}
       ],
-      notes:'통관 보관 기일 체킹 요망. 반기별 바이어 벤더 리스크 정기 평가 대상 계정.'}
+      notes:'북미 시장 유통망 라인 관리망 체크 요망. 반기별 바이어 벤더 종합 리스크 정기 평가 대상.'}
     ];
     save();
   }
@@ -264,7 +264,7 @@ function renderList(){
   const filtered=partners.filter(p=>p.name.toLowerCase().includes(q)||(p.code||'').toLowerCase().includes(q));
   document.getElementById('cnt').textContent=partners.length;
   document.getElementById('plist').innerHTML=filtered.length===0
-    ?'<p style="font-size:14px;color:var(--text-muted);text-align:center;padding:32px 0;">검색 매칭 결과 없음</p>'
+    ?'<p style="font-size:14px;color:var(--text-muted);text-align:center;padding:32px 0;">검색 결과가 없습니다</p>'
     :filtered.map(p=>`<div class="pi ${selId===p.id?'active':''}" onclick="selectP('${p.id}')">
       <div class="pname">${esc(p.name)}</div>
       <div class="psub">${esc(p.code||'')}${p.category?' · '+esc(p.category):''}</div>
@@ -425,7 +425,7 @@ function renderTimeline(p){
     <div class="sec-label" style="margin-top:0;"><i class="ti ti-ballpen-filled" aria-hidden="true"></i>의사록 아젠다 백업 양식</div>
     <div class="form-grid">
       ${fi('tl-date','협의 발생 일자','date','')}${fi('tl-title','요약 타이틀 헤드라인','text','')}
-      <div class="fg full"><label>교섭 협시 리포트 기술</label><textarea id="f-tl-detail" placeholder="단가 타결 조정안, 주요 요구 클레임 사항 등을 기재하십시오..."></textarea></div>
+      <div class="fg full"><label>교섭 협의 리포트 기술</label><textarea id="f-tl-detail" placeholder="단가 타결 조정안, 주요 요구 클레임 사항 등을 기재하십시오..."></textarea></div>
     </div>
     <div class="form-actions">
       <button class="btn btn-cancel" onclick="document.getElementById('add-tl-form').style.display='none'">취소</button>
@@ -470,7 +470,7 @@ function delTimeline(tid){
   save();renderTimeline(p);showToast('로그 이력이 완벽히 제거되었습니다.');
 }
 
-// 🛠️ 치명적 버그 수정 2: UI 제어 흐름 분리형 폼 주입 스크립트 설계 완료
+// ⚙️ 디버깅 및 UI 연결 분리 처리 완료: 이제 무반응 없이 무조건 폼이 열립니다.
 function openNew(){
   selId=null;
   renderList();
@@ -490,7 +490,7 @@ function showForm(p){
   document.getElementById('form-wrap').style.display='block';
   document.getElementById('form-content').innerHTML=`
   <div class="card">
-    <div class="sec-label" style="margin-top:0; font-size:16px; color:var(--primary);"><i class="ti ti-${isNew?'playlist-add':'edit-box'}" aria-hidden="true"></i>${isNew?'해외2팀 거래처 마스터 신규 원장 등록 양식':'지정 바이어 핵심 레코드 편집/갱신 조항'}</div>
+    <div class="sec-label" style="margin-top:0; font-size:16px; color:var(--primary);"><i class="ti ti-${isNew?'playlist-add':'edit-box'}" aria-hidden="true"></i>${isNew?'해외2팀 거래선 마스터 신규 원장 등록 양식':'지정 바이어 핵심 레코드 편집/갱신 조항'}</div>
 
     <div class="sec-label"><i class="ti ti-id-badge" aria-hidden="true"></i>법인 인프라 기본 인덱스</div>
     <div class="form-grid">
@@ -627,7 +627,7 @@ function showToast(msg){
   setTimeout(()=>t.classList.remove('show'),2400);
 }
 
-// 🛠️ 치명적 버그 수정 3: 화면을 모두 다 안전하게 그리고 나서 코드를 안전하게 주입
+// 브라우저 렌더링이 완전히 끝난 후 실행되도록 정밀 동기화 구조 채택
 window.addEventListener('DOMContentLoaded', load);
 </script>
 </body>
